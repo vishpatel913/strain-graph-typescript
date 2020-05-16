@@ -1,22 +1,32 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "target": "es6",
-      "noImplicitAny": true,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "outDir": "dist",
-      "baseUrl": ".",
-      "paths": {
-          "*": [
-              "node_modules/*",
-              "src/types/*"
-          ]
-      }
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"]
+    },
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "noFallthroughCasesInSwitch": true,
+    "composite": false,
+    "lib": ["dom", "es2016", "esnext.asynciterable"],
+    "emitDecoratorMetadata": true,
+    "strict": false,
+    "experimentalDecorators": true,
+    "rootDir": "src"
   },
-  "include": [
-      "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
