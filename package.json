@@ -2,7 +2,7 @@
   "name": "strain-graph-typescript",
   "version": "1.0.0",
   "description": "An apollo server built in node koa typescript ",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "repository": "https://github.com/vishpatel913/strain-graph-typescript.git",
   "author": "Vish Patel <vishpatel913@googlemail.com>",
   "license": "MIT",
@@ -19,7 +19,10 @@
     "serve-debug": "nodemon --inspect dist/server.js"
   },
   "dependencies": {
+    "@types/graphql": "^14.5.0",
+    "apollo-server-koa": "^2.13.1",
     "dotenv": "^8.2.0",
+    "graphql": "^15.0.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
