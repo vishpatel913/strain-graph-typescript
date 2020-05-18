@@ -3,52 +3,58 @@ import Router from "koa-router";
 import logger from "koa-logger";
 import json from "koa-json";
 import bodyParser from "koa-bodyparser";
-import { ApolloServer, gql } from "apollo-server-koa";
 
-const app = new Koa();
-const router = new Router();
+import { ApolloServer } from "apollo-server-koa";
+import "reflect-metadata";
+import { buildSchema } from "type-graphql";
 
-// /** Middlewares */
-app.use(json());
-app.use(logger());
-app.use(bodyParser());
+import { StrainResolver } from "./resolvers/Strain";
+import StrainAPI from "./datasources/strainApi";
 
-// /** Routes */
-app.use(router.routes()).use(router.allowedMethods());
+interface Context {
+  token?: string;
+}
 
-router.get("/", async (ctx: Koa.Context, next: () => Promise<any>) => {
-  ctx.body = { message: "This is your GET route" };
-  await next();
-});
+const main = async () => {
+  const schema = await buildSchema({
+    resolvers: [StrainResolver],
+    emitSchemaFile: true,
+    validate: false,
+  });
 
-router.post("/data", async (ctx: Koa.Context, next: () => Promise<any>) => {
-  ctx.body = {
-    message: "This is your POST route, attached you can find the data you sent",
-    body: ctx.request.body,
-  };
-  await next();
-});
+  const app = new Koa();
+  const router = new Router();
 
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
+  // /** Middlewares */
+  app.use(json());
+  app.use(logger());
+  app.use(bodyParser());
 
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => "Hello world!",
-  },
+  // /** Routes */
+  app.use(router.routes()).use(router.allowedMethods());
+
+  router.get("/", async (ctx: Koa.Context, next: () => Promise<any>) => {
+    ctx.body = { message: "Welcome to the Strain Graph, a GraphQL layer for Strain data" };
+    await next();
+  });
+
+  const dataSources = () => ({
+    strainApi: new StrainAPI(),
+  });
+
+  const server = new ApolloServer({
+    schema,
+    dataSources,
+    context: (): Context => ({ token: undefined }),
+    // mocks: true,
+  });
+
+  server.applyMiddleware({ app });
+
+  app.listen({ port: 4000 }, () =>
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
+  );
 };
-
-const server = new ApolloServer({ typeDefs, resolvers });
-
-server.applyMiddleware({ app });
-// alternatively you can get a composed middleware from the apollo server
-// app.use(server.getMiddleware());
-
-app.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
-);
+main().catch((error) => {
+  console.log(error, "error");
+});
