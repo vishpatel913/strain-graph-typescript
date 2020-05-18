@@ -3,6 +3,12 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""The Effect model"""
+type Effect {
+  effect: String!
+  type: String!
+}
+
 """The Strain Effects model"""
 type Effects {
   medical: [String!]!
@@ -11,6 +17,8 @@ type Effects {
 }
 
 type Query {
+  allEffects: [Effect!]!
+  flavors: [String!]!
   strains(effect: String, flavor: String, name: String, race: String): [Strain!]!
 }
 
@@ -25,7 +33,7 @@ enum Race {
 type Strain {
   desc: String
   effects: Effects!
-  flavours: [String!]!
+  flavors: [String!]
   id: ID!
   name: String!
   race: Race!

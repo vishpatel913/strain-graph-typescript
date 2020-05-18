@@ -15,8 +15,8 @@ class Strain {
   @Field({ nullable: true })
   desc?: string;
 
-  @Field(() => [String])
-  flavours: string[];
+  @Field(() => [String], { nullable: true })
+  flavors?: string[];
 
   @Field(() => Effects)
   effects: Effects;

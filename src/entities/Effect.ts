@@ -2,7 +2,7 @@ import { ObjectType, Field } from "type-graphql";
 import { IsIn } from "class-validator";
 
 @ObjectType({ description: "The Effect model" })
-class Effects {
+class Effect {
   @Field()
   effect: string;
 
@@ -11,4 +11,4 @@ class Effects {
   type: string;
 }
 
-export default Effects;
+export default Effect;

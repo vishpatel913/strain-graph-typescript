@@ -8,7 +8,9 @@ import { ApolloServer } from "apollo-server-koa";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 
-import { StrainResolver } from "./resolvers/Strain";
+import { StrainResolver } from "./resolvers/strain";
+import { EffectResolver } from "./resolvers/effect";
+import { FlavorResolver } from "./resolvers/flavor";
 import StrainAPI from "./datasources/strainApi";
 
 interface Context {
@@ -17,7 +19,7 @@ interface Context {
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers: [StrainResolver],
+    resolvers: [StrainResolver, EffectResolver, FlavorResolver],
     emitSchemaFile: true,
     validate: false,
   });
