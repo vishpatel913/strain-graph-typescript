@@ -1,5 +1,5 @@
 {
-  "name": "strain-graph-typescript",
+  "name": "strain-graph-api",
   "version": "1.0.0",
   "description": "An apollo server built in node koa typescript ",
   "main": "dist/server.js",
@@ -11,20 +11,21 @@
     "build": "yarn build-ts && yarn lint",
     "serve": "node dist/server.js",
     "watch-node": "nodemon dist/server.js",
-    "build-ts": "tsc",
+    "build-ts": "tsc -p tsconfig.json",
     "watch-ts": "tsc -w",
     "test": "jest --forceExit --coverage --verbose",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "serve-debug": "nodemon --inspect dist/server.js"
+    "serve-debug": "nodemon --inspect dist/server.js",
+    "build-docker": "docker build -t vishpatel913/strain-graph-api .",
+    "run-docker": "docker run --name strain-graph-api -p 80:4000 -d vishpatel913/strain-graph-api"
   },
   "dependencies": {
-    "@types/graphql": "^14.5.0",
     "apollo-datasource-rest": "^0.9.0",
     "apollo-server-koa": "^2.13.1",
     "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
-    "koa": "^2.11.0",
+    "koa": "^2.12.0",
     "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
     "koa-logger": "^3.2.1",

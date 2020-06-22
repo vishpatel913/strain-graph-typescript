@@ -13,9 +13,9 @@ import { EffectResolver } from "./resolvers/effect";
 import { FlavorResolver } from "./resolvers/flavor";
 import StrainAPI from "./datasources/strainApi";
 
-interface Context {
-  token?: string;
-}
+// interface Context {
+//   token?: string;
+// }
 
 const main = async () => {
   const schema = await buildSchema({
@@ -47,7 +47,18 @@ const main = async () => {
   const server = new ApolloServer({
     schema,
     dataSources,
-    context: (): Context => ({ token: undefined }),
+    context: async ({ ctx }) => {
+      let token;
+
+      try {
+        token = await ctx.request.headers.authorization;
+      } catch (e) {
+        throw new Error("Unauthenticated!");
+      }
+      return {
+        token,
+      };
+    },
     // mocks: true,
   });
 

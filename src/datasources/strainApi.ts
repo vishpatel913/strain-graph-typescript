@@ -1,15 +1,16 @@
-import { RESTDataSource } from "apollo-datasource-rest";
+import { RESTDataSource, RequestOptions } from "apollo-datasource-rest";
 import { SearchKey, GetKey } from "./types";
 
 class StrainAPI extends RESTDataSource {
-  get baseURL() {
-    if (this.context.token) return `https://strainapi.evanbusse.com/${this.context.token}/`;
-    else return "https://strainapi.evanbusse.com/DhMA9db/";
-  }
+  baseURL = "https://strainapi.evanbusse.com/";
 
-  // willSendRequest(request: RequestOptions) {
-  //   request.headers.set("Authorization", this.context.token);
-  // }
+  async resolveURL(request: RequestOptions) {
+    const token = await this.context.token;
+    if (!this.baseURL?.includes(token)) {
+      this.baseURL += `${token}/`;
+    }
+    return super.resolveURL(request);
+  }
 
   async getAllStrains() {
     return this.get("strains/search/all");
