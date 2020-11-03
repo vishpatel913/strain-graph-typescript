@@ -63,9 +63,9 @@ const main = async () => {
   });
 
   server.applyMiddleware({ app });
-
+  const PORT = process.env.PORT || 4000;
   app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
+    console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`),
   );
 };
 main().catch((error) => {
