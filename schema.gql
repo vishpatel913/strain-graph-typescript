@@ -19,6 +19,7 @@ type Effects {
 type Query {
   allEffects: [Effect!]!
   flavors: [String!]!
+  strain(delay: Float = 1): Strain!
   strains(effect: String, flavor: String, name: String, race: String): [Strain!]!
 }
 
